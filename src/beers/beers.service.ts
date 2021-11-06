@@ -7,21 +7,17 @@ import { Beer } from './entities/beer.entity';
 
 @Injectable()
 export class BeersService {
-  
-
   constructor(
     @InjectRepository(Beer)
     private beerRepository: Repository<Beer>,
-  ){
-   }
+  ) {}
 
   create(createBeerDto: CreateBeerDto): Promise<Beer> {
-    let beer = this.beerRepository.create(createBeerDto);
+    const beer = this.beerRepository.create(createBeerDto);
     return this.beerRepository.save(beer);
   }
 
-
-  findAll(style : string, sortBy : string , orderBy : string): Promise<Beer[]> {
+  findAll(_style: string, _sortBy: string, _orderBy: string): Promise<Beer[]> {
     return this.beerRepository.find();
   }
 
@@ -29,14 +25,12 @@ export class BeersService {
     return this.beerRepository.findOne(id);
   }
 
-
   async update(id: number, updateBeerDto: UpdateBeerDto): Promise<Beer> {
-    let beer = await this.findOne(id);
+    const beer = await this.findOne(id);
     beer.name = updateBeerDto.name;
     beer.style = updateBeerDto.style;
     beer.stock = updateBeerDto.stock;
     return this.beerRepository.save(beer);
-
   }
 
   remove(id: number): void {
